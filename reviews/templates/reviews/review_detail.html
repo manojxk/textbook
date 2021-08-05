@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Textbook</title>
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" >
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+</head>
+
+{% include 'reviews/navbar.html' %}
+<br>
+<br>
+<div class = 'links' style =  "margin-left: 20%; margin-right: 20%;">
+    <div style ="text-align:center; font-family:'Poiret One', cursive; font-size:40px;">
+        Scan Your Textbooks! Find the BEST Resources!
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class = 'links' style=" margin-left:16%; margin-right: 16%" >
+<br>
+    <div style ="text-align:center; font-family:'Poiret One', cursive; font-size:40px;">
+        Keywords from your Scan!
+    </div>
+    {% for format in format_text %}
+        {{ format }},
+    {% endfor %}
+<br>
+</div>
+<br>
+<br>
+<br>
+<div class = 'links' style=" margin-left:8%; margin-right: 8%">
+<br>
+    <div style ="text-align:center;font-family:'Poiret One', cursive; font-size:40px;">
+
+        Study Resources on the Web for Your Book:
+    </div>
+    {% for site in text %}
+        <br>
+        <br>
+            <div style = "text-align:center; font-size:30px; font-weight:bold;">
+                <a href ='{{ site }}'>Learn More: {{ site }}</a>
+                <style>
+                     a{
+                            font-weight: 500;
+                            border-width: thin;
+                            text-align: center;
+                            border-radius: 33px;
+                            font-family:'Raleway';
+                            font-size:20px;
+                    }
+                </style>
+            </div>
+    {% endfor %}
+    <br>
+</div>
+<br>
+<br>
+<br>
+<div class = 'links' style=" margin-left:2%; margin-right: 2%">
+ <br>
+    <div style ="text-align:center; border-radius: 30px; font-family:'Poiret One', cursive; font-size:40px;">
+
+        Supplemental Youtube Videos for the Topic
+         <br>
+    </div>
+
+{%  for video in yt_vids %}
+    <br> <img src= "{{video.thumbnails}}" class = "center"/>
+    <style>
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+    }
+    </style>
+    <p> {{ video.title }} </p>
+    <style>
+        p{
+            text-align: center;
+            border-radius: 30px;
+            font-family:'Poiret One', cursive;
+            font-size:20px;
+        }
+    </style>
+
+    <div style = "text-align:center">
+        <a href ='{{ video.url }}'>View Video in Youtube</a>
+    </div>
+    <style>
+        a{
+            font-weight: 500;
+            border-width: thin;
+            text-align: center;
+            border-radius: 33px;
+            font-family:'Raleway';
+            font-size:20px;
+        }
+    </style>
+    <br>
+    <div style = "text-align:left; margin-left:20px; margin-right:20px;">
+    {%  for comment in comments %}
+        {% if comment.id == video.id %}
+            <p>
+                Comment: {{ comment.comment_text }}
+            </p>
+            <style>
+                p{
+                    font-weight: 500;
+                    text-align:center;
+                    border-width: thin;
+                    border-radius: 30px;
+                    font-family:'Raleway';
+                    font-size:20px;
+                }
+            </style>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    {% for key, value in score.items %}
+        <!-- check if the video id is the same -->
+        {% if key == video.id %}
+            <div class = "cs" style ='margin-left: 25%; margin-right:25%;'>
+                Comment Sentiment Score: {{ value }}
+            </div>
+        <br>
+        {% endif %}
+    {% endfor %}
+
+     {% for key, value in magnitude.items %}
+        <!-- check if the video id is the same -->
+        {% if key == video.id %}
+            <div class = "cs" style ='margin-left: 20%; margin-right:20%;'>
+                Comment Sentiment Magnitude: {{ value }}
+            </div>
+        <br>
+        {% endif %}
+    {% endfor %}
+
+{% endfor %}
+<br>
+</div>
+
+<br>
+<br>
+<br>
+<div class = 'kw' style ="text-align:center; color:rebeccapurple; border-radius: 30px; font-family:'Poiret One', cursive; font-size:40px;">
+    Please scan an image for processing...
+    <br>
+</div>
+<br>
+<br>
+<br>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!--
+    <input type="file" name="myfile" accept="image/*" capture="camera">
+    -->
+
+    <div class="rectangle">
+        <div class="img2">
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <input type="file" name="myfile" accept="image/*" capture="camera">
+            <button id = 'uploader' class = 'hidden' type="submit">Upload Image</button>
+
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <label for="uploader" class="custom-file-upload">
+                    Click to Confirm Upload
+    </label>
+
+  </form>
+<br>
+<br>
+<br>
+
+>
+
+</body>
+<style>
+
+    .links{
+
+        background: rgba(168, 235, 231, 0.9);
+        border-radius: 30px;
+
+        margin-left:50px;
+        border-width: thin;
+        margin-right:50px;
+        color:darkblue;
+        /*#461e87 */
+
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        font-style:italic;
+        text-shadow:0px 0px 13px blue ;
+        /*#a2adbc*/
+        animation-name: example;
+        animation-duration: 15s;
+    }
+
+
+    @keyframes example {
+          0%   {background-color:rgba(126,240,208,0.8)}
+          25%  {background-color:rgba(126,233,240,0.6)}
+          50%  {background-color:rgba(224,241,217,0.8)}
+          75%  {background-color:rgba(155,126,240,0.8)}
+          100% {background-color:rgba(168, 235, 231, 0.9)}
+    }
+
+    @keyframes example1 {
+          0%   {background-color:rgba(126,233,240,0.6)}
+          25%  {background-color:rgba(126,240,208,0.8)}
+          50%  {background-color:rgba(224,241,217,0.8)}
+          75%  {background-color:rgba(155,126,240,0.8)}
+          100% {background-color:rgba(229, 212, 246, 0.9)}
+    }
+
+    @keyframes example2 {
+          0%   {background-color:rgba(126,233,240,0.6)}
+          25%  {background-color:rgba(126,240,208,0.8)}
+          50%  {background-color:rgba(224,241,217,0.8)}
+          75%  {background-color:rgba(155,126,240,0.8)}
+          100% {background-color:rgba(146, 209, 140, 0.8)}
+    }
+
+    .kw{
+        background: rgba(229, 212, 246, 0.9);
+        border-radius: 30px;
+        /*
+        margin-left:50px;
+        margin-right:50px;
+        */
+        margin-left: 16%;
+        margin-right: 16%;
+
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        font-style:italic;
+        text-shadow:0px 0px 13px #32106b;
+        /*#a2adbc*/
+
+        animation-name: example1;
+        animation-duration: 15s;
+    }
+
+    .cs{
+        background: rgba(146, 209, 140, 0.8);
+        border-radius: 30px;
+        margin-left: 16%;
+        margin-right: 16%;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        color: darkgreen;
+        text-shadow: 0px 0px 15px white
+        animation-name: example2;
+        animation-duration: 15s;
+    }
+
+    .hidden{
+         display: none;
+    }
+
+    .square {
+      height: 125px;
+      width: 125px;
+      background-color: rgba(168, 235, 231, 0.9);
+      /*transform: rotate(45deg);*/
+      margin-left:42%;
+      margin-right: 58%;
+      animation-name: example;
+      animation-duration: 15s;
+      border-radius: 50px;
+    }
+
+    .custom-file-upload{
+        display: block;
+        text-align: center;
+
+        font-family:"Poiret One";
+        border-radius: 20px;
+        line-height: 150%;
+        background: rgba(229, 212, 246, 0.9);
+        margin-left:40%;
+        margin-right:40%;
+
+        text-align: center;
+
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow:0px 0px 13px #32106b;
+        /*#a2adbc*/
+
+        animation-name: example1;
+        animation-duration: 15s;
+    }
+
+    .img2{
+        position: relative;
+        /*width: 106px;*/
+        height: 220px;
+        width: 50%;
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+
+        background: url("https://img.icons8.com/pastel-glyph/2x/barcode-scanner--v2.png");
+        background-size:130px 90px;
+        background-repeat: no-repeat;
+        mix-blend-mode: normal;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    .comment{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 18px;
+        text-align: center;
+        color: #FFFFFF;
+    }
+    .rectangle {
+        position: relative;
+        border-radius: 30px;
+        width: 320px;
+        height: 160px;
+        left: 50%; /* centers #box in its containing element */
+        margin-left: -160px;
+        top: 20px;
+        bottom: 20px;
+        background: rgba(229, 212, 246, 0.8);
+
+        animation-name: example1;
+        animation-duration: 15s;
+    }
+
+
+    body{
+
+        background-position:center;
+
+        background-size:contain;
+        /*background-image: url('{% static 'bookTrade/retro.jpg' %}');*/
+        /* clouds */
+        /*background-image:url("https://t4.ftcdn.net/jpg/02/92/00/77/360_F_292007743_h413LUfBpsyXi8uvuBToQW0bw9b3x05U.jpg"); */
+
+        /*background-image: url("https://wallpaperaccess.com/full/2014465.png");*/
+
+        /*super crazy city one, nice b/c very retro?*/
+        background-image: url("https://i.pinimg.com/originals/9a/68/19/9a6819d7dfb8aa400e3579dac39298e9.jpg");
+
+        /* cherry blossoms --> really pretty one */
+        /*background-image: url("https://i.pinimg.com/originals/23/66/f5/2366f58fd970d2772f3aec52179b0873.jpg");*/
+
+        background-position-x:-370px;
+        background-position-y:-769px;
+        min-height: 100%;
+
+        /* background-image: url("https://wallpapercave.com/wp/wp5939575.jpg"); */
+
+    }
+
+</style>
+
+</html>
