@@ -4,23 +4,22 @@ from django.contrib.auth import login, logout
 import math
 from django.http.response import HttpResponse
 from django.http import HttpResponseRedirect
-from .forms import UploadFileForm
+
 import urllib.request
 import os, io
 import json
 import requests
 from google.cloud import storage
 from googleapiclient.discovery import build
-from .gcloud import GoogleCloudMediaFileStorage
+
 import re
 from bs4 import BeautifulSoup
 from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 from google.cloud import language_v1
-from .models import Upload
-from .models import Matching
+
 import argparse
-from .forms import MatchingForm
+
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\Manoj Kumar\Desktop\New folder\ServiceAccountToken.json'
 client = vision_v1.ImageAnnotatorClient()
 
